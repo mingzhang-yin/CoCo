@@ -1,4 +1,4 @@
 #!/bin/bash
 #
 
-python mnist.py --method CoCO
+python mnist.py --method CoCO #ERM, IRM, CoCO
