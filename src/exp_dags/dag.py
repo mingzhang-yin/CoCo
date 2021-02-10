@@ -61,6 +61,7 @@ def example5(e=1, N=10000):
 def IRMv1(environments, args, lmbd):
     estimate_r = []
     phi = torch.nn.Parameter(torch.normal(1,0.2,[environments[0][0].shape[1],1]))
+    dummy_w = torch.nn.Parameter(torch.Tensor([1.0])) 
     opt1 = torch.optim.Adam([phi], lr=args.lrs) 
     phi_old = 0
     for iteration in range(args.max_iter):
@@ -68,11 +69,11 @@ def IRMv1(environments, args, lmbd):
         penalty = 0
         for i in range(len(environments)):
             x_e, y_e, beta = environments[i]
-            error_e = 0.5*mse(x_e @ phi, y_e).mean()   
+            error_e = 0.5*mse(x_e @ phi * dummy_w, y_e).mean()   
             error += error_e
             
-            phi_grad_out = torch.autograd.grad(error_e, phi, create_graph=True)
-            penalty += torch.square(torch.sum(phi_grad_out[0]*phi)) 
+            phi_grad_out = torch.autograd.grad(error_e, dummy_w, create_graph=True)
+            penalty += torch.square(phi_grad_out[0]) 
   
         opt1.zero_grad()
         total_loss =  ((1/lmbd)*error +penalty)*100
@@ -85,7 +86,7 @@ def IRMv1(environments, args, lmbd):
         if iteration % 2000 == 0: 
             phi_new = np.mean(estimate_r[-100:],axis=0)
             print(phi_new)
-            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>10000)):
+            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>=10000)):
                 break
             else:
                 phi_old = phi_new
@@ -120,7 +121,7 @@ def Naive_CoCO(environments, args):
         if iteration % 2000 == 0: 
             phi_new = np.mean(estimate_r[-100:],axis=0)
             print(phi_new)
-            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>10000)):
+            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>=10000)):
                 break
             else:
                 phi_old = phi_new                    
@@ -153,7 +154,7 @@ def CoCO(environments, args):
         if iteration % 2000 == 0: 
             phi_new = np.mean(estimate_r[-100:],axis=0)
             print(phi_new)
-            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>10000)):
+            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>=10000)):
                 break
             else:
                 phi_old = phi_new                
@@ -180,7 +181,7 @@ def ERM(environments, args):
         if iteration % 2000 == 0:
             phi_new = np.mean(estimate_r[-100:],axis=0)
             print(phi_new)
-            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>10000)):
+            if ((np.sum(np.abs(phi_new - phi_old))<0.001) & (iteration>=10000)):
                 break
             else:
                 phi_old = phi_new                
