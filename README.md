@@ -1,5 +1,5 @@
 # CoCo
-Conditional Causal Optimization
+Constrained Causal Optimization
 
 To run the code
 ```
