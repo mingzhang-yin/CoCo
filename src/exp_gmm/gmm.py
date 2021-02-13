@@ -72,7 +72,7 @@ if __name__ == '__main__':
             optimizer.zero_grad()  
             loss_w =  args.lmbd*coco_loss
             if args.method == 'CoCO':
-                lmbd_r = 1 if epoch <(args.steps/2) else 0
+                lmbd_r = 1 if epoch <(args.steps/2) else 0.1
                 tot_loss = risk*lmbd_r + loss_w if args.spurious else risk
             if args.method == 'ERM':
                 tot_loss = risk
@@ -98,7 +98,7 @@ if __name__ == '__main__':
             risk = risk/len(envs)
             loss = loss/len(envs) 
     
-            lmbd_risk = 1 if epoch <(args.steps/2) else 0
+            lmbd_risk = 1 if epoch <(args.steps/2) else 0.1
             tot_loss = risk*lmbd_risk + args.lmbd_irm*loss  
             tot_loss.backward()
             optimizer.step()              
