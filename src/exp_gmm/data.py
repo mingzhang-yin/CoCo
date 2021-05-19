@@ -75,6 +75,7 @@ def envgen(args, spurious=True):
     np.random.seed(args.seed)
     for i in range(args.n_env):
         sudo = np.random.uniform(low=0, high=1, size=[args.K, args.K//2+1])
-        D, y = datagen(sudo, 0.01*i, args)
+        #D, y = datagen(sudo, 0.01*i, args)
+        D, y = datagen(sudo, 0.05, args)
         envs.append([D,y])
     return envs

@@ -14,17 +14,19 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--lr', type=float, default=0.0001)
     parser.add_argument('--path', default='results/', help='The path results to be saved.')
-    parser.add_argument('--method', default='CoCO', help='ERM, IRM, CoCO')    
-    parser.add_argument('--grayscale_model', action='store_true')   
+    parser.add_argument('--method', default='Rex', help='ERM, IRM, CoCO')
+    parser.add_argument('--grayscale_model', default=False)    
     #IRM
     parser.add_argument('--penalty_anneal_iters', type=int, default=190)
     parser.add_argument('--l2_regularizer_weight', type=float,default=0.00110794568 )
     parser.add_argument('--penalty_weight', type=float, default=91257.18613115903)
-    #CoCO
+    #CoCo
     parser.add_argument('--coco_weight', type=float, default=500)
+    #Rex
+    parser.add_argument('--rex_weight', type=float, default=500)
     flags = parser.parse_args()
     
-    path = os.path.join(flags.path, f'mnist_{flags.method}_{flags.seed}')
+    path = os.path.join(flags.path, f'mnist_{flags.method}_{flags.rex_weight}')
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -141,6 +143,33 @@ if __name__ == '__main__':
           test_acc = envs[2]['acc']
           test_acc_true = envs[2]['acc_true']
         
+        if flags.method == 'Rex':
+
+          for env in envs:
+            logits = mlp(env['images'])
+            env['nll'] = mean_nll(logits, env['labels'])
+            env['acc'] = mean_accuracy(logits, env['labels'])
+            env['acc_true'] = mean_accuracy(logits, env['labels_nonoise'])
+      
+          train_nll = torch.stack([envs[0]['nll'], envs[1]['nll']]).mean()
+          train_acc = torch.stack([envs[0]['acc'], envs[1]['acc']]).mean()
+          train_acc_true = torch.stack([envs[0]['acc_true'], envs[1]['acc_true']]).mean()
+          train_penalty = torch.stack([envs[0]['nll'], envs[1]['nll']]).var()
+        
+        
+          loss = train_nll.clone()
+            
+          rex_weight = (flags.rex_weight if step >= (flags.steps/2) else 1.0)
+          loss += rex_weight * train_penalty
+          if rex_weight > 1.0:
+              loss /= rex_weight
+        
+          optimizer.zero_grad()
+          loss.backward()
+          optimizer.step()
+            
+          test_acc = envs[2]['acc']
+          test_acc_true = envs[2]['acc_true']        
         if step % 100 == 0:
           pretty_print(
               np.int32(step),
