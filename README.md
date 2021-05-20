@@ -27,7 +27,7 @@ Below is the paper to cite if you find the algorithms in this repository useful 
 ```
 ```
 
-* To generate data for wild animal classification, follow the steps describe by [Cloudera](https://github.com/fastforwardlabs/causality-for-ml). 
+* To generate data for wild animal classification, follow the steps describe in [this repo](https://github.com/fastforwardlabs/causality-for-ml). 
 
 * To run the code
 ```
