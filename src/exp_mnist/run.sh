@@ -4,7 +4,7 @@
 TIMESTAMP=$(date +%Y%m%d%H%M%S)
 OUT_SUFFIX=".out"
 RUN_SCRIPT="run_base.sh"
-Ms="CoCO IRM ERM"
+Ms="CoCO"
 
 for METHOD in ${Ms}; do
 	export METHOD=${METHOD}
