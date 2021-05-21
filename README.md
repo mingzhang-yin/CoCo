@@ -29,6 +29,6 @@ chmod +x run.sh
 bash run.sh
 ```
 
-Below is the paper to cite if you find the algorithms in this repository useful in your own research:
+* Below is the paper to cite if you find the algorithms in this repository useful in your own research:
 ```
 ```
