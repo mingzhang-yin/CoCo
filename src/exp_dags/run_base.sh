@@ -3,7 +3,7 @@
 #SBATCH -A sml
 #SBATCH --cpus-per-task=4
 #SBATCH -t 10:00:00
-##SBATCH --mail-user=mzyin@utexas.edu
+##SBATCH --mail-user=
 ##SBATCH --mail-type=END
 
 
