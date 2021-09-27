@@ -18,7 +18,7 @@ accurate estimates of the causal model.
 
 # Paper Repository
 
-* The python scripts are included in the folder `src/`. The bash files to submit jobs to the cluster are included as `run.sh` (note that this depends on the machine and the bash file might need to be changed accordingly).
+* The python scripts are included in the folder `src/`. The bash files to submit jobs to the cluster are included as `run.sh` (note that this depends on the machine and the bash file syntax may need to be changed accordingly).
 
 * To generate data for wild animal classification, follow the steps describe in [this repo](https://github.com/fastforwardlabs/causality-for-ml). Other data can be self generated or auto downloaded. 
 
