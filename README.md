@@ -29,7 +29,7 @@ chmod +x run.sh
 bash run.sh
 ```
 
-* Below is the paper to cite if you find the algorithms in this repository useful in your own research:
+* Below is the bibliography information of the paper:
 ```
 @article{yin2021optimization,
   title={Optimization-based Causal Estimation from Heterogenous Environments}, 
