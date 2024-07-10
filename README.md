@@ -1,5 +1,5 @@
 # Optimization-based Causal Estimation from Heterogeneous Environments
-This repository contains the code to implement examples of CoCo as described in [Optimization-based Causal Estimation from Heterogenous Environments](https://arxiv.org/pdf/2109.11990.pdf) by Mingzhang Yin, Yixin Wang and David Blei.
+This repository contains the code to implement examples of CoCo as described in [Optimization-based Causal Estimation from Heterogenous Environments](https://www.jmlr.org/papers/volume25/21-1028/21-1028.pdf) by Mingzhang Yin, Yixin Wang and David Blei.
 
 
 # Abstract
